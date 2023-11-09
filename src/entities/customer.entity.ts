@@ -13,22 +13,22 @@ export default class Customer {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column("varchar")
   name: string;
 
-  @Column({ unique: true })
+  @Column("varchar", { unique: true })
   email: string;
 
-  @Column({ unique: true })
+  @Column("varchar", { unique: true })
   cpf: string;
 
-  @Column()
+  @Column("varchar")
   cellphone: string;
 
-  @Column()
+  @Column("date")
   birthdate: Date;
 
-  @Column()
+  @Column("boolean")
   isClubMember: boolean;
 
   @CreateDateColumn()

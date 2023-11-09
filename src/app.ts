@@ -1,14 +1,11 @@
-import express, { Application } from "express";
 import "reflect-metadata";
+import express, { Application } from "express";
+import { routes } from "./routes";
 
 const app: Application = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hello World",
-  });
-});
+routes(app);
 
 export default app;

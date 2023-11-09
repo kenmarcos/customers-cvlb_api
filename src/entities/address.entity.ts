@@ -13,28 +13,28 @@ export default class Address {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column("varchar")
   zipCode: string;
 
-  @Column()
+  @Column("varchar")
   state: string;
 
-  @Column()
+  @Column("varchar")
   city: string;
 
-  @Column()
+  @Column("varchar")
   district: string;
 
-  @Column()
+  @Column("varchar")
   street: string;
 
-  @Column()
+  @Column("int")
   number: number;
 
-  @Column({ nullable: true })
+  @Column("varchar", { nullable: true })
   complement: string;
 
-  @Column({ nullable: true })
+  @Column("varchar", { nullable: true })
   title: string;
 
   @CreateDateColumn()
