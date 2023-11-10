@@ -1,4 +1,5 @@
 import { AppDataSource } from "../data-source";
+import AppError from "../errors/appError";
 
 interface CreateCustomerBody {
   name: string;
@@ -10,17 +11,21 @@ interface CreateCustomerBody {
 }
 
 export const createCustomerService = async (body: CreateCustomerBody) => {
-  const customerRepository = AppDataSource.getRepository("Customer");
+  try {
+    const customerRepository = AppDataSource.getRepository("Customer");
 
-  const newCustomer = customerRepository.create(body);
+    const newCustomer = customerRepository.create(body);
 
-  await customerRepository.save(newCustomer);
+    await customerRepository.save(newCustomer);
 
-  const createdCustomer = await customerRepository.findOneBy({
-    id: newCustomer.id,
-  });
+    const createdCustomer = await customerRepository.findOneBy({
+      id: newCustomer.id,
+    });
 
-  return createdCustomer;
+    return createdCustomer;
+  } catch (error: any) {
+    throw new AppError(error.detail, 400);
+  }
 };
 
 export const listCustomersService = async () => {
