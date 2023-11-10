@@ -22,9 +22,15 @@ export const createCustomerService = async (body: CreateCustomerBody) => {
 };
 
 export const listCustomersService = async () => {
-  const users = await customerRepository.find();
+  const customers = await customerRepository.find();
 
-  return users;
+  return customers;
+};
+
+export const listCustomerByIdService = async (customerId: string) => {
+  const customer = await customerRepository.findOneBy({ id: customerId });
+
+  return customer;
 };
 
 export const updateCustomerService = async (customerId: string, body: any) => {

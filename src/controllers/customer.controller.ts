@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import {
   createCustomerService,
   deleteCustomerService,
+  listCustomerByIdService,
   listCustomersService,
   updateCustomerService,
 } from "../services/customer.services";
@@ -31,6 +32,22 @@ export const listCustomersController = async (
     const users = await listCustomersService();
 
     return res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const listCustomerByIdController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { customerId } = req.params;
+
+    const customer = await listCustomerByIdService(customerId);
+
+    res.json(customer);
   } catch (error) {
     next(error);
   }
