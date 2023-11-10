@@ -1,5 +1,6 @@
 import { AppDataSource } from "../data-source";
 import AppError from "../errors/appError";
+import { customerRepository } from "../repositories/customer.repository";
 
 interface CreateCustomerBody {
   name: string;
@@ -12,26 +13,25 @@ interface CreateCustomerBody {
 
 export const createCustomerService = async (body: CreateCustomerBody) => {
   try {
-    const customerRepository = AppDataSource.getRepository("Customer");
+    const newCustomer = await customerRepository.save(body);
 
-    const newCustomer = customerRepository.create(body);
-
-    await customerRepository.save(newCustomer);
-
-    const createdCustomer = await customerRepository.findOneBy({
-      id: newCustomer.id,
-    });
-
-    return createdCustomer;
+    return newCustomer;
   } catch (error: any) {
     throw new AppError(error.detail, 400);
   }
 };
 
 export const listCustomersService = async () => {
-  const customerRepository = AppDataSource.getRepository("Customer");
-
   const users = await customerRepository.find();
 
   return users;
+};
+
+export const deleteCustomerService = async (customerId: string) => {
+  const customer = await customerRepository.findOneBy({ id: customerId });
+  if (!customer) {
+    throw new AppError("Customer not found", 404);
+  }
+
+  await customerRepository.remove(customer);
 };
