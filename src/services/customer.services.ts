@@ -1,6 +1,6 @@
 import { AppDataSource } from "../data-source";
 
-interface CustomerBody {
+interface CreateCustomerBody {
   name: string;
   email: string;
   cpf: string;
@@ -9,7 +9,7 @@ interface CustomerBody {
   isClubMember: boolean;
 }
 
-export const createCustomerService = async (body: CustomerBody) => {
+export const createCustomerService = async (body: CreateCustomerBody) => {
   const customerRepository = AppDataSource.getRepository("Customer");
 
   const newCustomer = customerRepository.create(body);

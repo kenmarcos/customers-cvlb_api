@@ -28,7 +28,7 @@ export default class Customer {
   @Column("date")
   birthdate: Date;
 
-  @Column("boolean")
+  @Column("boolean", { default: false })
   isClubMember: boolean;
 
   @CreateDateColumn()
