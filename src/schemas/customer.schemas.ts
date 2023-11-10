@@ -8,3 +8,12 @@ export const createCustomerSchema = yup.object().shape({
   birthdate: yup.date().required("Birthdate is required"),
   isClubMember: yup.boolean(),
 });
+
+export const updateCustomerSchema = yup.object().shape({
+  name: yup.string(),
+  email: yup.string().email(),
+  cpf: yup.string(),
+  cellphone: yup.string(),
+  birthdate: yup.date(),
+  isClubMember: yup.boolean(),
+});

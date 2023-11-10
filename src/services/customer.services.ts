@@ -27,6 +27,24 @@ export const listCustomersService = async () => {
   return users;
 };
 
+export const updateCustomerService = async (customerId: string, body: any) => {
+  const customer = await customerRepository.findOneBy({ id: customerId });
+  if (!customer) {
+    throw new AppError("Customer not found", 404);
+  }
+
+  await customerRepository.save({
+    id: customerId,
+    ...body,
+  });
+
+  const updatedCustomer = await customerRepository.findOneBy({
+    id: customerId,
+  });
+
+  return updatedCustomer;
+};
+
 export const deleteCustomerService = async (customerId: string) => {
   const customer = await customerRepository.findOneBy({ id: customerId });
   if (!customer) {

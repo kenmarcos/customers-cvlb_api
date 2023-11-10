@@ -3,6 +3,7 @@ import {
   createCustomerService,
   deleteCustomerService,
   listCustomersService,
+  updateCustomerService,
 } from "../services/customer.services";
 
 export const createCustomerController = async (
@@ -30,6 +31,23 @@ export const listCustomersController = async (
     const users = await listCustomersService();
 
     return res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateCustomerController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { customerId } = req.params;
+    const body = req.body;
+
+    const updatedCustomer = await updateCustomerService(customerId, body);
+
+    res.status(200).json(updatedCustomer);
   } catch (error) {
     next(error);
   }
