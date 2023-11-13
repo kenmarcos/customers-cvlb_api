@@ -16,3 +16,12 @@ export const createAddressService = async (body: CreateAddressBody) => {
 
   return newAddress;
 };
+
+export const deleteAddressService = async (addressId: string) => {
+  const address = await addressRepository.findOneBy({ id: addressId });
+  if (!address) {
+    throw new AppError("Address not found", 404);
+  }
+
+  await addressRepository.remove(address);
+};
