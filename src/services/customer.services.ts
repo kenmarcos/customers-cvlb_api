@@ -31,7 +31,14 @@ export const listCustomersService = async (page: number, perPage: number) => {
 };
 
 export const listCustomerByIdService = async (customerId: string) => {
-  const customer = await customerRepository.findOneBy({ id: customerId });
+  const customer = await customerRepository.findOne({
+    where: {
+      id: customerId,
+    },
+    relations: {
+      addresses: true,
+    },
+  });
 
   return customer;
 };
