@@ -1,15 +1,9 @@
-import { AppDataSource } from "../data-source";
 import AppError from "../errors/appError";
+import {
+  CreateCustomerBody,
+  UpdateCustomerBody,
+} from "../interfaces/customer.interfaces";
 import { customerRepository } from "../repositories/customer.repository";
-
-interface CreateCustomerBody {
-  name: string;
-  email: string;
-  cpf: string;
-  cellphone: string;
-  birthdate: Date;
-  isClubMember: boolean;
-}
 
 export const createCustomerService = async (body: CreateCustomerBody) => {
   try {
@@ -42,7 +36,10 @@ export const listCustomerByIdService = async (customerId: string) => {
   return customer;
 };
 
-export const updateCustomerService = async (customerId: string, body: any) => {
+export const updateCustomerService = async (
+  customerId: string,
+  body: UpdateCustomerBody
+) => {
   const customer = await customerRepository.findOneBy({ id: customerId });
   if (!customer) {
     throw new AppError("Customer not found", 404);
