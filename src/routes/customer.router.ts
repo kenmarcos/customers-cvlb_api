@@ -5,7 +5,7 @@ import {
   listCustomerByIdController,
   listCustomersController,
   updateCustomerController,
-} from "../controllers/customer.controller";
+} from "../controllers/customer.controllers";
 import { validate } from "../middlewares/validation.middleware";
 import {
   createCustomerSchema,
