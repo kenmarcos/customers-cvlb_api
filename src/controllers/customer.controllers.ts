@@ -15,9 +15,9 @@ export const createCustomerController = async (
   try {
     const body = req.body;
 
-    const newUser = await createCustomerService(body);
+    const newCustomer = await createCustomerService(body);
 
-    res.status(201).json(newUser);
+    res.status(201).json(newCustomer);
   } catch (error) {
     next(error);
   }
