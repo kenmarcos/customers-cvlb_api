@@ -21,10 +21,19 @@ export const createCustomerService = async (body: CreateCustomerBody) => {
   }
 };
 
-export const listCustomersService = async () => {
-  const customers = await customerRepository.find();
+export const listCustomersService = async (page: number, perPage: number) => {
+  const [customers, totalCount] = await customerRepository.findAndCount({
+    skip: (page - 1) * perPage,
+    take: perPage,
+    order: {
+      createdAt: "DESC",
+    },
+  });
 
-  return customers;
+  return {
+    customers,
+    totalCount,
+  };
 };
 
 export const listCustomerByIdService = async (customerId: string) => {

@@ -29,9 +29,15 @@ export const listCustomersController = async (
   next: NextFunction
 ) => {
   try {
-    const users = await listCustomersService();
+    const PAGE_DEFAULT = 1;
+    const PER_PAGE_DEFAULT = 10;
 
-    return res.json(users);
+    const page = Number(req.query.page) || PAGE_DEFAULT;
+    const perPage = Number(req.query.perPage) || PER_PAGE_DEFAULT;
+
+    const customerList = await listCustomersService(page, perPage);
+
+    return res.json(customerList);
   } catch (error) {
     next(error);
   }
