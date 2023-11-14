@@ -6,6 +6,7 @@ import {
   listCustomersService,
   updateCustomerService,
 } from "../services/customer.services";
+import { CreateCustomerBody } from "../interfaces/customer.interfaces";
 
 export const createCustomerController = async (
   req: Request,
@@ -13,7 +14,7 @@ export const createCustomerController = async (
   next: NextFunction
 ) => {
   try {
-    const body = req.body;
+    const body: CreateCustomerBody = req.body;
 
     const newCustomer = await createCustomerService(body);
 

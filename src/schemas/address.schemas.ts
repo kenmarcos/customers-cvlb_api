@@ -9,5 +9,5 @@ export const createAddressSchema = yup.object().shape({
   number: yup.number().required("Number is required"),
   complement: yup.string(),
   title: yup.string(),
-  customerId: yup.string().required("UserId is required"),
+  customerId: yup.string(),
 });

@@ -3,13 +3,47 @@ import {
   CreateCustomerBody,
   UpdateCustomerBody,
 } from "../interfaces/customer.interfaces";
+import { addressRepository } from "../repositories/address.repository";
 import { customerRepository } from "../repositories/customer.repository";
 
 export const createCustomerService = async (body: CreateCustomerBody) => {
   try {
-    const newCustomer = await customerRepository.save(body);
+    const {
+      name,
+      email,
+      birthdate,
+      cellphone,
+      cpf,
+      isClubMember,
+      ...addressData
+    } = body;
 
-    return newCustomer;
+    const newCustomer = customerRepository.create({
+      name,
+      email,
+      birthdate,
+      cellphone,
+      cpf,
+      isClubMember,
+    });
+    await customerRepository.save(newCustomer);
+
+    const newAddress = addressRepository.create({
+      ...addressData,
+      customer: newCustomer,
+    });
+    await addressRepository.save(newAddress);
+
+    const customer = await customerRepository.findOne({
+      where: {
+        id: newCustomer.id,
+      },
+      relations: {
+        addresses: true,
+      },
+    });
+
+    return customer;
   } catch (error: any) {
     throw new AppError(error.detail, 400);
   }
