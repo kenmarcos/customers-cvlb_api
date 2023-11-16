@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.16",
