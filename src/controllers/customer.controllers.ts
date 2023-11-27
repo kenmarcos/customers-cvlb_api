@@ -25,7 +25,13 @@ export const createCustomerController = async (
 };
 
 export const listCustomersController = async (
-  req: Request,
+  req: Request<
+    {},
+    {},
+    {},
+    { page?: number; perPage?: number; search?: string }
+  >,
+  // Request<RequestParams, ResponseBody, RequestBody, RequestQuery>
   res: Response,
   next: NextFunction
 ) => {
@@ -35,8 +41,9 @@ export const listCustomersController = async (
 
     const page = Number(req.query.page) || PAGE_DEFAULT;
     const perPage = Number(req.query.perPage) || PER_PAGE_DEFAULT;
+    const search = req.query.search;
 
-    const customerList = await listCustomersService(page, perPage);
+    const customerList = await listCustomersService({ page, perPage, search });
 
     return res.json(customerList);
   } catch (error) {
