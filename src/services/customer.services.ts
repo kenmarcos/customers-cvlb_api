@@ -1,3 +1,4 @@
+import { ILike } from "typeorm";
 import AppError from "../errors/appError";
 import {
   CreateCustomerBody,
@@ -49,13 +50,24 @@ export const createCustomerService = async (body: CreateCustomerBody) => {
   }
 };
 
-export const listCustomersService = async (page: number, perPage: number) => {
+export const listCustomersService = async ({
+  page,
+  perPage,
+  search,
+}: {
+  page: number;
+  perPage: number;
+  search?: string;
+}) => {
   const [customers, totalCount] = await customerRepository.findAndCount({
     skip: (page - 1) * perPage,
     take: perPage,
     order: {
       createdAt: "DESC",
     },
+    where: search
+      ? [{ name: ILike(`%${search}%`) }, { cpf: ILike(`%${search}%`) }]
+      : undefined,
   });
 
   return {
