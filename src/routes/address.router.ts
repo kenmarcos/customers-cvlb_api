@@ -5,12 +5,18 @@ import {
   deleteAddressController,
 } from "../controllers/address.controllers";
 import { createAddressSchema } from "../schemas/address.schemas";
+import { authenticateUser } from "../middlewares/authenticateUser";
 
 const router = express.Router();
 
 export const addressRouter = () => {
-  router.post("/", validate(createAddressSchema), createAddressController);
-  router.delete("/:addressId", deleteAddressController);
+  router.post(
+    "/",
+    authenticateUser,
+    validate(createAddressSchema),
+    createAddressController
+  );
+  router.delete("/:addressId", authenticateUser, deleteAddressController);
 
   return router;
 };
