@@ -11,15 +11,22 @@ import {
   createCustomerSchema,
   updateCustomerSchema,
 } from "../schemas/customer.schemas";
+import { authenticateUser } from "../middlewares/authenticateUser";
 
 const router = express.Router();
 
 export const customerRouter = () => {
-  router.post("/", validate(createCustomerSchema), createCustomerController);
-  router.get("/", listCustomersController);
-  router.get("/:customerId", listCustomerByIdController);
+  router.post(
+    "/",
+    authenticateUser,
+    validate(createCustomerSchema),
+    createCustomerController
+  );
+  router.get("/", authenticateUser, listCustomersController);
+  router.get("/:customerId", authenticateUser, listCustomerByIdController);
   router.patch(
     "/:customerId",
+    authenticateUser,
     validate(updateCustomerSchema),
     updateCustomerController
   );
